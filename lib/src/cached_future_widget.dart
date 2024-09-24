@@ -37,7 +37,6 @@ class _CachedFutureWidgetState<T extends BaseModel> extends State<CachedFutureWi
   @override
   void initState() {
     super.initState();
-    assert(T is BaseModel, 'T must be a subclass of BaseModel');
     cacheManager.initCache();
   }
 
