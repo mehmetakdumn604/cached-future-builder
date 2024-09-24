@@ -31,13 +31,17 @@ class CachedFutureWidget<T extends BaseModel> extends StatefulWidget {
   _CachedFutureWidgetState<T> createState() => _CachedFutureWidgetState<T>();
 }
 
-class _CachedFutureWidgetState<T extends BaseModel> extends State<CachedFutureWidget<T>> {
+class _CachedFutureWidgetState<T extends BaseModel> extends State<CachedFutureWidget<T>> with AutomaticKeepAliveClientMixin {
   final CacheManager cacheManager = CacheManager();
+
+  Future<T>? futureFunction;
 
   @override
   void initState() {
     super.initState();
-    cacheManager.initCache();
+    cacheManager.initCache().then((value) {
+      futureFunction = _getData();
+    });
   }
 
   Future<T> _getData() async {
@@ -63,7 +67,7 @@ class _CachedFutureWidgetState<T extends BaseModel> extends State<CachedFutureWi
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<T>(
-      future: _getData(),
+      future: futureFunction,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return widget.loadingBuilder ?? const Center(child: CircularProgressIndicator.adaptive());
@@ -77,4 +81,7 @@ class _CachedFutureWidgetState<T extends BaseModel> extends State<CachedFutureWi
       },
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
