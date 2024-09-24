@@ -66,6 +66,7 @@ class _CachedFutureWidgetState<T extends BaseModel> extends State<CachedFutureWi
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return FutureBuilder<T>(
       future: futureFunction,
       builder: (context, snapshot) {
