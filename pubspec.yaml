@@ -1,6 +1,6 @@
 name: cached_future_builder
 description: A Flutter package to handle caching with FutureBuilder.
-version: 1.0.3
+version: 1.0.4
 homepage:
 repository: https://github.com/mehmetakdumn604/cached-future-builder
 issue_tracker: https://github.com/mehmetakdumn604/cached-future-builder/issues
