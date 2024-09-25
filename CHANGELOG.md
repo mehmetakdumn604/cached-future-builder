@@ -1,3 +1,5 @@
+## 1.0.7
+* Fixed no data bug
 ## 1.0.6
 * Added Comments to understand clearly
 ## 1.0.5

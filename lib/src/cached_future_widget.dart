@@ -39,9 +39,7 @@ class _CachedFutureWidgetState<T extends BaseModel>
   @override
   void initState() {
     super.initState();
-    cacheManager.initCache().then((value) {
-      futureFunction = _getData();
-    });
+    cacheManager.initCache();
   }
 
   Future<T> _getData() async {
@@ -68,7 +66,7 @@ class _CachedFutureWidgetState<T extends BaseModel>
   Widget build(BuildContext context) {
     super.build(context);
     return FutureBuilder<T>(
-      future: futureFunction,
+      future: _getData(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return widget.loadingBuilder ??
