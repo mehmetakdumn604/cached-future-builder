@@ -26,12 +26,12 @@ class CachedFutureWidget<T extends BaseModel> extends StatefulWidget {
     this.loadingBuilder,
     this.onEmptyWidget,
   });
-
   @override
-  _CachedFutureWidgetState<T> createState() => _CachedFutureWidgetState<T>();
+  State<CachedFutureWidget<T>> createState() => _CachedFutureWidgetState<T>();
 }
 
-class _CachedFutureWidgetState<T extends BaseModel> extends State<CachedFutureWidget<T>> with AutomaticKeepAliveClientMixin {
+class _CachedFutureWidgetState<T extends BaseModel>
+    extends State<CachedFutureWidget<T>> with AutomaticKeepAliveClientMixin {
   final CacheManager cacheManager = CacheManager();
 
   Future<T>? futureFunction;
@@ -71,13 +71,16 @@ class _CachedFutureWidgetState<T extends BaseModel> extends State<CachedFutureWi
       future: futureFunction,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return widget.loadingBuilder ?? const Center(child: CircularProgressIndicator.adaptive());
+          return widget.loadingBuilder ??
+              const Center(child: CircularProgressIndicator.adaptive());
         } else if (snapshot.hasError) {
-          return widget.errorBuilder?.call(snapshot.error.toString()) ?? Center(child: Text('Error: ${snapshot.error}'));
+          return widget.errorBuilder?.call(snapshot.error.toString()) ??
+              Center(child: Text('Error: ${snapshot.error}'));
         } else if (snapshot.hasData) {
           return widget.builder(context, snapshot.data!);
         } else {
-          return widget.onEmptyWidget ?? const Center(child: Text('No data available'));
+          return widget.onEmptyWidget ??
+              const Center(child: Text('No data available'));
         }
       },
     );
